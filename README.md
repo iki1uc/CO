@@ -21,7 +21,7 @@ Enthält die technische Dokumentation (Architektur, Achsen, Flows).
 /src  
 Enthält die Runtime‑Module (PQ, RESPO, SDSA, XTOM, MEAT, HDF).
 
-/.github  
+/github  
 Enthält Copilot‑Instructions und Agents, damit Copilot das Projekt versteht.
 
 ## Ziel des Projekts
