@@ -1,9 +1,6 @@
-import { CO_API } from "./api.js";
-import { CO_STATION } from "./station.js";
-import { CO_RUNTIME } from "./runtime.js";
-import { CO_SYSTEM_MAP } from "./KG.js";
-import { CO_ANALYZE } from "./CO.js";
-import { CO_DECIDE } from "./BOOT.js";
+import { SDSA } from "../SDSA/station.js";
+import { PQ } from "../PQ/station.js";
+import { PP } from "../PP/station.js";
 
 export const CO = {
     api: CO_API,
@@ -13,9 +10,12 @@ export const CO = {
     analyze: CO_ANALYZE,
     decide: CO_DECIDE,
 
-    boot(system) {
+    boot(respo) {
         return {
-            system,
+            respo,
+            sdsa: SDSA.boot(respo),
+            pqCopilot: PQ.boot(respo),
+            ppCopilot: PP.boot(respo),
             api: this.api,
             station: this.station,
             runtime: this.runtime,
