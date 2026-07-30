@@ -1,3 +1,11 @@
+import { CO_API } from "./api.js";
+import { CO_STATION } from "./station.js";
+import { CO_RUNTIME } from "./runtime.js";
+
+import { CO_SYSTEM_MAP } from "./KG.js";
+import { CO_ANALYZE } from "./CO.js";
+import { CO_DECIDE } from "./BOOT.js";
+
 import { SDSA } from "../SDSA/station.js";
 import { PQ } from "../PQ/station.js";
 import { PP } from "../PP/station.js";
@@ -16,12 +24,9 @@ export const CO = {
             sdsa: SDSA.boot(respo),
             pqCopilot: PQ.boot(respo),
             ppCopilot: PP.boot(respo),
-            api: this.api,
-            station: this.station,
-            runtime: this.runtime,
-            map: this.map,
-            analyze: this.analyze,
-            decide: this.decide,
+
+            runtime: CO_RUNTIME,
+
             degree: 360,
             fulfillment: 100
         };
