@@ -1,6 +1,10 @@
 /* BOOT */
 const co = CO.boot(RESPO);
 log(statusBox, "CO Copilot gestartet.");
+<div class="box">
+    <h2>CO Copilot Instance</h2>
+    <pre id="coInstance">Wird geladen…</pre>
+</div>
 
 /* RUNTIME */
 const data = await co.runtime.load("ANKER.json");
