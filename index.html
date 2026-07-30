@@ -28,6 +28,13 @@
     </style>
 </head>
 <body>
+import { CO_RUNTIME } from "../CO/runtime.js";
+
+const coData = await CO_RUNTIME.load("ANKER.json");
+const coSearch = CO_RUNTIME.search("axis", coData);
+const coChat = CO_RUNTIME.chat("Statusbericht");
+
+console.log({ coData, coSearch, coChat });
 
     <h1>CO – Copilot Anker</h1>
 
