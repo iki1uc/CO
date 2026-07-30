@@ -1,14 +1,12 @@
 export const PQ_COPILOT = {
     init(sdsa) {
-        console.log("PQ Copilot gestartet…");
-
         return {
             advise(task) {
-                return `PQ Copilot empfiehlt: ${task} zuerst ausführen.`;
+                return `PQ Copilot (360°/100%) empfiehlt: ${task}`;
             },
-
             axes: sdsa.axes,
-            degrees: sdsa.vector
+            degree: 360,
+            fulfillment: 100
         };
     }
 };
