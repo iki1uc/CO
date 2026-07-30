@@ -3,47 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>CO – Copilot Anker</title>
-    <style>
-        body {
-            background: #111;
-            color: #eee;
-            font-family: Arial, sans-serif;
-            padding: 20px;
-        }
-        .box {
-            background: #222;
-            padding: 15px;
-            margin-bottom: 20px;
-            border-radius: 8px;
-        }
-        h1, h2 {
-            color: #4af;
-        }
-        pre {
-            background: #000;
-            padding: 10px;
-            border-radius: 6px;
-            overflow-x: auto;
-        }
-    </style>
 </head>
 <body>
 
     <h1>CO – Copilot Anker</h1>
-    <div class="box">
-        <h2>Systemstatus</h2>
-        <pre id="status">Starte CO…</pre>
-    </div>
-
-    <div class="box">
-        <h2>SDSA Achsen</h2>
-        <pre id="sdsa">Noch keine Daten…</pre>
-    </div>
-
-    <div class="box">
-        <h2>RESPO Log</h2>
-        <pre id="respo">Warte auf RESPO…</pre>
-    </div>
+    <pre id="status">Starte CO…</pre>
+    <pre id="sdsa">SDSA wird geladen…</pre>
+    <pre id="respo">RESPO Log…</pre>
 
     <script type="module">
         import { RESPO } from "./src/respo/respo-core.js";
@@ -53,27 +19,23 @@
         const sdsaBox = document.getElementById("sdsa");
         const respoBox = document.getElementById("respo");
 
-        function logStatus(msg) {
-            statusBox.textContent += "\n" + msg;
+        function log(box, msg) {
+            box.textContent += "\n" + msg;
         }
 
-        function logRespo(msg) {
-            respoBox.textContent += "\n" + msg;
-        }
-
-        async function startCO() {
-            logStatus("RESPO wird initialisiert…");
+        function startCO() {
+            log(statusBox, "RESPO wird initialisiert…");
 
             const co = CO.boot(RESPO);
-            logStatus("CO Copilot gestartet.");
+            log(statusBox, "CO Copilot gestartet.");
 
             const sdsa = RESPO.loadSDSA();
             sdsaBox.textContent = JSON.stringify(sdsa, null, 2);
 
-            logRespo("SDSA erklärt:");
-            logRespo(JSON.stringify(RESPO.explainSDSA(), null, 2));
+            log(respoBox, "SDSA erklärt:");
+            log(respoBox, JSON.stringify(RESPO.explainSDSA(), null, 2));
 
-            logStatus("System vollständig aktiv.");
+            log(statusBox, "System vollständig aktiv.");
         }
 
         startCO();
