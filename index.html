@@ -89,7 +89,17 @@
             log(ppBox, co.ppCopilot.optimize("Initialisierung"));
 
             log(statusBox, "System vollständig aktiv.");
+log(statusBox, `CO: ${co.degree}° / ${co.fulfillment}%`);
+log(respoBox, `RESPO: ${co.sdsa.respoDegree}° / ${co.sdsa.respoFulfillment}%`);
+log(sdsaBox, `SDSA: ${co.sdsa.vector} / ${co.sdsa.fulfillment}`);
+log(pqBox, `PQ: ${co.pqCopilot.degree}° / ${co.pqCopilot.fulfillment}%`);
+log(ppBox, `PP: ${co.ppCopilot.degree}° / ${co.ppCopilot.fulfillment}%`);
+
+        
         }
+        
+
+        
 
         startCO();
     </script>
