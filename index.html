@@ -5,6 +5,13 @@ log(statusBox, "CO Copilot gestartet.");
     <h2>CO Copilot Instance</h2>
     <pre id="coInstance">Wird geladen…</pre>
 </div>
+/* BOOT */
+const co = CO.boot(RESPO);
+log(statusBox, "CO Copilot gestartet.");
+
+/* CO INSTANCE SICHTBAR MACHEN */
+const coInstanceBox = document.getElementById("coInstance");
+coInstanceBox.textContent = JSON.stringify(co, null, 2);
 
 /* RUNTIME */
 const data = await co.runtime.load("ANKER.json");
