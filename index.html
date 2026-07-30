@@ -27,14 +27,8 @@
         }
     </style>
 </head>
+
 <body>
-import { CO_RUNTIME } from "../CO/runtime.js";
-
-const coData = await CO_RUNTIME.load("ANKER.json");
-const coSearch = CO_RUNTIME.search("axis", coData);
-const coChat = CO_RUNTIME.chat("Statusbericht");
-
-console.log({ coData, coSearch, coChat });
 
     <h1>CO – Copilot Anker</h1>
 
@@ -64,6 +58,7 @@ console.log({ coData, coSearch, coChat });
     </div>
 
     <script type="module">
+        import { CO_RUNTIME } from "../CO/runtime.js";
         import { RESPO } from "./src/respo/respo-core.js";
         import { CO } from "./src/co/co.js";
 
@@ -77,36 +72,60 @@ console.log({ coData, coSearch, coChat });
             box.textContent += "\n" + msg;
         }
 
-        function startCO() {
+        async function startCO() {
+
+            /* -------------------------------
+               CO_RUNTIME API TEST
+            --------------------------------*/
+            const coData = await CO_RUNTIME.load("ANKER.json");
+            const coSearch = CO_RUNTIME.search("axis", coData);
+            const coChat = CO_RUNTIME.chat("Statusbericht");
+
+            console.log({ coData, coSearch, coChat });
+
+            /* -------------------------------
+               CO BOOT
+            --------------------------------*/
             log(statusBox, "RESPO wird initialisiert…");
 
             const co = CO.boot(RESPO);
             log(statusBox, "CO Copilot gestartet.");
 
+            /* -------------------------------
+               SDSA
+            --------------------------------*/
             const sdsa = co.sdsa;
             sdsaBox.textContent = JSON.stringify(sdsa, null, 2);
 
+            /* -------------------------------
+               RESPO
+            --------------------------------*/
             log(respoBox, "SDSA erklärt:");
             log(respoBox, JSON.stringify(RESPO.explainSDSA(), null, 2));
 
+            /* -------------------------------
+               PQ
+            --------------------------------*/
             log(pqBox, "PQ Copilot aktiv:");
             log(pqBox, co.pqCopilot.advise("Systemstart"));
 
+            /* -------------------------------
+               PP
+            --------------------------------*/
             log(ppBox, "PP Copilot aktiv:");
             log(ppBox, co.ppCopilot.optimize("Initialisierung"));
 
+            /* -------------------------------
+               Degrees & Fulfillment
+            --------------------------------*/
+            log(statusBox, `CO: ${co.degree}° / ${co.fulfillment}%`);
+            log(respoBox, `RESPO: ${co.sdsa.respoDegree}° / ${co.sdsa.respoFulfillment}%`);
+            log(sdsaBox, `SDSA: ${co.sdsa.vector} / ${co.sdsa.fulfillment}`);
+            log(pqBox, `PQ: ${co.pqCopilot.degree}° / ${co.pqCopilot.fulfillment}%`);
+            log(ppBox, `PP: ${co.ppCopilot.degree}° / ${co.ppCopilot.fulfillment}%`);
+
             log(statusBox, "System vollständig aktiv.");
-log(statusBox, `CO: ${co.degree}° / ${co.fulfillment}%`);
-log(respoBox, `RESPO: ${co.sdsa.respoDegree}° / ${co.sdsa.respoFulfillment}%`);
-log(sdsaBox, `SDSA: ${co.sdsa.vector} / ${co.sdsa.fulfillment}`);
-log(pqBox, `PQ: ${co.pqCopilot.degree}° / ${co.pqCopilot.fulfillment}%`);
-log(ppBox, `PP: ${co.ppCopilot.degree}° / ${co.ppCopilot.fulfillment}%`);
-
-        
         }
-        
-
-        
 
         startCO();
     </script>
