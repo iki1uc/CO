@@ -1,124 +1,83 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-<meta charset="UTF-8">
-<title>ANKER – S01 · iki1uc</title>
-
-<style>
-body { background:#000; color:#0f0; font-family:monospace; padding:40px; }
-h1 { color:#0f0; letter-spacing:4px; margin-bottom:30px; }
-.block { background:#111; border:1px solid #333; padding:25px; margin-bottom:30px; border-radius:8px; }
-.title { font-size:22px; color:#6cf; margin-bottom:10px; }
-pre { background:#000; border-left:3px solid #6cf; padding:15px; margin-top:10px; white-space:pre-wrap; }
-a { color:#6cf; text-decoration:none; font-weight:bold; }
-</style>
-
-<!-- SYSTEM CORE MODULES -->
-<script src="../HH/cr/RESPO.core.js"></script>
-<script src="../HH/cr/AXI.core.js"></script>
-<script src="../HH/cr/TEM.core.js"></script>
-<script src="../HH/cr/RUN8.core.js"></script>
-
-<!-- ID MODULES -->
-<script src="IDkoop.js"></script>
-<script src="IDneutral.js"></script>
-<script src="IDpook.js"></script>
-
+    <meta charset="UTF-8">
+    <title>CO – Copilot Anker</title>
+    <style>
+        body {
+            background: #111;
+            color: #eee;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .box {
+            background: #222;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+        }
+        h1, h2 {
+            color: #4af;
+        }
+        pre {
+            background: #000;
+            padding: 10px;
+            border-radius: 6px;
+            overflow-x: auto;
+        }
+    </style>
 </head>
-
 <body>
 
-<h1>ANKER – S01 · iki1uc</h1>
+    <h1>CO – Copilot Anker</h1>
+    <div class="box">
+        <h2>Systemstatus</h2>
+        <pre id="status">Starte CO…</pre>
+    </div>
 
-<!-- ACHSEN STATUS -->
-<div class="block">
-    <div class="title">Stabilisationsachse</div>
-    <p id="axis-status">Lade Achsen…</p>
-</div>
+    <div class="box">
+        <h2>SDSA Achsen</h2>
+        <pre id="sdsa">Noch keine Daten…</pre>
+    </div>
 
-<!-- IDENTITÄT -->
-<div class="block">
-    <div class="title">Identität</div>
-    <p>
-        <a href="id.html">→ ANKER‑Identität öffnen</a>
-    </p>
-    <pre id="id-status"></pre>
-</div>
+    <div class="box">
+        <h2>RESPO Log</h2>
+        <pre id="respo">Warte auf RESPO…</pre>
+    </div>
 
-<!-- ACHSEN LISTE -->
-<div class="block">
-    <div class="title">Stabilisierte Achsen</div>
-    <pre id="axis-list"></pre>
-</div>
+    <script type="module">
+        import { RESPO } from "./src/respo/respo-core.js";
+        import { CO } from "./src/co/co.js";
 
-<!-- RESPO STATUS -->
-<div class="block">
-    <div class="title">RESPO‑Status</div>
-    <pre id="respo-status"></pre>
-</div>
+        const statusBox = document.getElementById("status");
+        const sdsaBox = document.getElementById("sdsa");
+        const respoBox = document.getElementById("respo");
 
-<!-- SYSTEM STATUS -->
-<div class="block">
-    <div class="title">System‑Status</div>
-    <pre id="system-status"></pre>
-</div>
+        function logStatus(msg) {
+            statusBox.textContent += "\n" + msg;
+        }
 
-<script>
-(async function () {
+        function logRespo(msg) {
+            respoBox.textContent += "\n" + msg;
+        }
 
-    /* -------------------------------
-       ANKER DATEN LADEN
-    --------------------------------*/
-    const anker = await fetch("ANKER.json").then(r => r.json()).catch(() => null);
-    const raw = await fetch("ANKER.raw").then(r => r.text()).catch(() => "");
+        async function startCO() {
+            logStatus("RESPO wird initialisiert…");
 
-    document.getElementById("axis-list").innerText = raw || "Keine Achsen gefunden";
+            const co = CO.boot(RESPO);
+            logStatus("CO Copilot gestartet.");
 
+            const sdsa = RESPO.loadSDSA();
+            sdsaBox.textContent = JSON.stringify(sdsa, null, 2);
 
-    /* -------------------------------
-       AXI ENGINE
-    --------------------------------*/
-    const axi = AXI_CORE();
-    document.getElementById("axis-status").innerText =
-        axi ? "Achsen stabil" : "Achsenfehler";
+            logRespo("SDSA erklärt:");
+            logRespo(JSON.stringify(RESPO.explainSDSA(), null, 2));
 
+            logStatus("System vollständig aktiv.");
+        }
 
-    /* -------------------------------
-       RESPO ENGINE
-    --------------------------------*/
-    const respo = RESPO_CORE(anker || {});
-    document.getElementById("respo-status").innerText =
-        `Score: ${respo.score}\nStatus: ${respo.ok ? "STABIL" : "KRITISCH"}`;
-
-
-    /* -------------------------------
-       ID MODUS ERKENNEN
-    --------------------------------*/
-    let idMode = "neutral";
-    if (ID_KOOP?.active) idMode = "koop";
-    if (ID_POOK?.active) idMode = "pook";
-
-    const idMap = {
-        koop: ID_KOOP,
-        neutral: ID_NEUTRAL,
-        pook: ID_POOK
-    };
-
-    document.getElementById("id-status").innerText =
-        `Modus: ${idMode.toUpperCase()}\nInfo: ${idMap[idMode].info()}`;
-
-
-    /* -------------------------------
-       SYSTEM STATUS
-    --------------------------------*/
-    const tem = TEM_CORE();
-    const run8 = RUN8();
-
-    document.getElementById("system-status").innerText =
-        `Zeit: ${tem.timestamp}\nKernel: ${run8.run}\nSystem: OK`;
-
-})();
-</script>
+        startCO();
+    </script>
 
 </body>
 </html>
