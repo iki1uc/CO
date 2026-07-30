@@ -1,0 +1,7 @@
+import { PQ } from "../PQ/station.js";
+import { RESPO } from "../RESPO/station.js";
+
+const pq = PQ.boot(RESPO);
+const result = pq.advise("Systemstart");
+
+console.log(result);
