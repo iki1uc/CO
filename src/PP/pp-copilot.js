@@ -1,14 +1,12 @@
 export const PP_COPILOT = {
     init(sdsa) {
-        console.log("PP Copilot gestartet…");
-
         return {
             optimize(process) {
-                return `PP Copilot optimiert Prozess: ${process}`;
+                return `PP Copilot (360°/100%) optimiert: ${process}`;
             },
-
             axes: sdsa.axes,
-            degrees: sdsa.vector
+            degree: 360,
+            fulfillment: 100
         };
     }
 };
