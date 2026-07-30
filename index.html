@@ -1,34 +1,38 @@
-/* BOOT */
-const co = CO.boot(RESPO);
-log(statusBox, "CO Copilot gestartet.");
 <div class="box">
-    <h2>CO Copilot Instance</h2>
-    <pre id="coInstance">Wird geladen…</pre>
+  <h2>CO Copilot Instance</h2>
+  <pre id="coInstance">Wird geladen…</pre>
 </div>
-/* BOOT */
-const co = CO.boot(RESPO);
-log(statusBox, "CO Copilot gestartet.");
 
-/* CO INSTANCE SICHTBAR MACHEN */
-const coInstanceBox = document.getElementById("coInstance");
-coInstanceBox.textContent = JSON.stringify(co, null, 2);
+<div class="box">
+  <h2>CO Chat</h2>
+  <input id="coInput" placeholder="Nachricht an CO…">
+  <button id="coSend">Senden</button>
+  <pre id="coChat"></pre>
+</div>
 
-/* RUNTIME */
-const data = await co.runtime.load("ANKER.json");
-const search = co.runtime.search("axis", data);
-const chat = co.runtime.chat("Statusbericht");
+<div class="box">
+  <h2>PQ Modus</h2>
+  <button id="pqInteraktion">Interaktion</button>
+  <button id="pqNormal">Normal</button>
+  <button id="pqEdit">Edit</button>
+  <pre id="pqOutput"></pre>
+</div>
 
-/* SDSA */
-sdsaBox.textContent = JSON.stringify(co.sdsa, null, 2);
+<div class="box">
+  <h2>Pipeline</h2>
+  <button id="runPipeline">Pipeline starten</button>
+  <pre id="pipelineOutput"></pre>
+</div>
 
-/* RESPO */
-log(respoBox, JSON.stringify(RESPO.explainSDSA(), null, 2));
+<div class="box">
+  <h2>9×9 Matrix</h2>
+  <div id="matrix"></div>
+  <pre id="matrixOutput"></pre>
+</div>
 
-/* PQ */
-log(pqBox, co.pqCopilot.advise("Systemstart"));
-
-/* PP */
-log(ppBox, co.ppCopilot.optimize("Initialisierung"));
-
-/* DEGREES */
-log(statusBox, `CO: ${co.degree}° / ${co.fulfillment}%`);
+<div class="box">
+  <h2>Agent Modus</h2>
+  <button id="agentOn">Autonom AN</button>
+  <button id="agentOff">Autonom AUS</button>
+  <pre id="agentOutput"></pre>
+</div>
