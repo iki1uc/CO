@@ -1,28 +1,30 @@
-# ANKER – Stabilisationsachse · iki1uc
+# CO – PQ / RESPO / SDSA Runtime
 
-## Zweck
-ANKER ist die Stabilisationsachse des iki1uc‑Systems.
-Es hält die Achsen IQ, QI, EVO, UPD, UPG, BIOS und CALC im korrekten Verhältnis.
+CO ist ein modular aufgebautes Runtime‑System bestehend aus:
+
+- PQ (Priority Queue)
+- RESPO (Response Flow)
+- SDSA (81‑Achsenvektor)
+- XTOM (Transformation Layer)
+- MEAT (Execution Layer)
+- HDF (Local TMP Storage)
+
+Ziel:
+Dieses Repository ist so strukturiert, dass GitHub Copilot im Browser (github.dev)
+alle Module verstehen, analysieren und optimieren kann.
 
 ## Struktur
-- NAME: ANKER
-- ID: A01
-- Station: S01
-- Dimension: D4
-- Modus: erabel (neutral, operation möglich)
 
-## Rolle
-ANKER stabilisiert, ohne selbst aktiv zu berechnen oder zu steuern.
-Es ist die neutrale Achse zwischen AXI, 6d und API.
+/docs  
+Enthält die technische Dokumentation (Architektur, Achsen, Flows).
 
-## Bindungen
-- AXI
-- 6d
-- 360
-- 100
-- 213 (REAL)
-- API
+/src  
+Enthält die Runtime‑Module (PQ, RESPO, SDSA, XTOM, MEAT, HDF).
 
-## Status
-STATE = STABIL  
-READY = 100%
+/.github  
+Enthält Copilot‑Instructions und Agents, damit Copilot das Projekt versteht.
+
+## Ziel des Projekts
+
+CO soll als KI‑unterstützte Runtime dienen, die lokal ausgeführt wird,
+während Copilot im Browser als Analyse‑Operator arbeitet.
