@@ -1,37 +1,50 @@
-module,status,info
-pipeline,ok,läuft stabil
-pq,interaktion,aktiv
-agent,auto,on
-matrix,rotate,active
-nc,ki,true
-nc,ai,false
-nc,scale,true
-nc,hub6d,false
-function applySystemCSV(csv) {
+async function applySystemCSV(csv) {
+
+    // CSV Status laden
+    const csvStatus = await loadCSV("system-status.csv");
+
+    // NC neu initialisieren
+    NC_MODULE = NC.init(SDSA_MODULE, RESPO_MODULE, PIPELINE_MODULE, csvStatus);
+
     csv.forEach(row => {
-        const module = row[0];
-        const status = row[1];
-const csvStatus = await loadCSV("system-status.csv");
-NC_MODULE = NC.init(SDSA_MODULE, RESPO_MODULE, PIPELINE_MODULE, csvStatus);
-if (module === "pipeline" && status === "ok")
+
+        const module = row[0];   // pipeline / pq / agent / matrix / nc
+        const key     = row[1];  // ok / interaktion / auto / rotate / ki / ai / scale / hub6d
+        const value   = row[2];  // true / false / aktiv / on / active
+
+        // -------------------------
+        // Pipeline
+        // -------------------------
+        if (module === "pipeline" && key === "ok")
             runPipeline.style.background = "#8df58d";
 
+        // -------------------------
+        // PQ
+        // -------------------------
         if (module === "pq")
-            pqOutput.textContent = "PQ: " + status;
+            pqOutput.textContent = "PQ: " + key;
 
-        if (module === "agent" && status === "auto")
+        // -------------------------
+        // Agent
+        // -------------------------
+        if (module === "agent" && key === "auto")
             agentOn.style.background = "#00ccff";
 
-        if (module === "matrix" && status === "rotate")
+        // -------------------------
+        // Matrix
+        // -------------------------
+        if (module === "matrix" && key === "rotate")
             matrix.style.border = "3px solid orange";
 
-        if (module === "nc" && row[2] === "true") {
-            if (row[1] === "ki") swKI.checked = true;
-            if (row[1] === "ai") swAI.checked = true;
-            if (row[1] === "scale") swSCALE.checked = true;
-nc.extend("predict", (x) => x * 2);
+        // -------------------------
+        // NC Module
+        // -------------------------
+        if (module === "nc") {
 
-if (row[1] === "hub6d") swHUB6D.checked = true;
+            if (key === "ki" && value === "true") swKI.checked = true;
+            if (key === "ai" && value === "true") swAI.checked = true;
+            if (key === "scale" && value === "true") swSCALE.checked = true;
+            if (key === "hub6d" && value === "true") swHUB6D.checked = true;
         }
     });
 }
