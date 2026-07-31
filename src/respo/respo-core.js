@@ -46,3 +46,14 @@ export const RESPO = {
 getFlow() { return this.sdsa.flow; }
 getBoost() { return this.sdsa.boost; }
 getStabilisation() { return this.sdsa.STATUS?.length || 1; }
+getFlow() {
+    return this.sdsa.flow;
+},
+
+getBoost() {
+    return this.sdsa.boost;
+},
+
+getStabilisation() {
+    return this.sdsa.FEHLER?.length || 1;
+}
