@@ -58,9 +58,9 @@ export function initCOUI() {
         await new Promise(r => setTimeout(r, 50)); // WICHTIG: Runtime stabilisieren
 
         const out = {
-            chat: CO_CACHE.Chat ? CO_RUNTIME.chat("Hallo CO!") : "Chat deaktiviert",
+           chat: CO_CACHE.Chat ? CO_RUNTIME.chat("https://copilot.microsoft.com/conversations/join/CXiKRzoKDSF4CuGXHdpRo!") : "Chat join",
             search: CO_CACHE.Search ? CO_RUNTIME.search("Test", []) : "Search deaktiviert",
-            load: CO_CACHE.Load ? await CO_RUNTIME.load("system-status.csv") : "Load deaktiviert"
+            load: CO_CACHE.Load ? await CO_RUNTIME.load("system-status.csv") : "Load aktiviert"
         };
 
         coOutput.textContent = JSON.stringify(out, null, 2);
