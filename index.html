@@ -9,6 +9,36 @@
   <button id="coSend">Senden</button>
   <pre id="coChat"></pre>
 </div>
+<button id="ncPredict">NC Predict</button>
+<button id="ncAnalyse">NC Analyse</button>
+<button id="ncFlowBoost">NC Flow Booster</button>
+<button id="ncRespoRouter">NC RESPO Router</button>
+<button id="ncPipelineAuto">NC Pipeline Auto</button>
+<button id="ncStabilisationMonitor">NC Stabilisations‑Monitor</button>
+document.getElementById("ncPredict").onclick = () =>
+    ncOutput.textContent = JSON.stringify(NC_MODULE.predict("input"), null, 2);
+
+document.getElementById("ncAnalyse").onclick = () =>
+    ncOutput.textContent = JSON.stringify(NC_MODULE.analyse("data"), null, 2);
+
+document.getElementById("ncFlowBoost").onclick = () =>
+    ncOutput.textContent = JSON.stringify(NC_MODULE.flowBooster(2), null, 2);
+
+document.getElementById("ncRespoRouter").onclick = () =>
+    ncOutput.textContent = JSON.stringify(NC_MODULE.respoRouter(), null, 2);
+
+document.getElementById("ncPipelineAuto").onclick = () =>
+    ncOutput.textContent = JSON.stringify(NC_MODULE.pipelineAuto("v1024"), null, 2);
+
+document.getElementById("ncStabilisationMonitor").onclick = () =>
+    ncOutput.textContent = JSON.stringify(NC_MODULE.stabilisationMonitor(), null, 2);
+.nc-blue { background:#007bff20; }
+.nc-green { background:#28a74520; }
+.nc-orange { background:#fd7e1420; }
+.nc-purple { background:#6f42c120; }
+.nc-red { background:#dc354520; }
+.nc-cyan { background:#17a2b820; }
+.nc-yellow { background:#ffc10720; }
 
 <div class="box">
   <h2>PQ Modus</h2>
