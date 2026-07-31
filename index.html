@@ -8,58 +8,36 @@
 
 <body>
 
-    <h1>CO Copilot Instance</h1>
-    <div id="status">Wird geladen…</div>
+<h1>CO Copilot Instance</h1>
 
-    <h2>CO Chat</h2>
-    <textarea id="chatInput" placeholder="Nachricht an CO…"></textarea>
-    <button id="chatSend">Senden</button>
+<div id="status">Wird geladen…</div>
 
-    <h2>Globales Modul‑Panel</h2>
-    <div id="globalHub">
-        <label><input type="checkbox" id="modNC"> NC aktiv</label>
-        <label><input type="checkbox" id="modPQ"> PQ aktiv</label>
-        <label><input type="checkbox" id="modPipeline"> Pipeline aktiv</label>
-        <label><input type="checkbox" id="modAgent"> Agent aktiv</label>
-        <label><input type="checkbox" id="modMatrix"> Matrix aktiv</label>
-        <label><input type="checkbox" id="modRESPO"> RESPO aktiv</label>
-        <label><input type="checkbox" id="modSDSA"> SDSA aktiv</label>
-        <label><input type="checkbox" id="modRuntime"> Runtime aktiv</label>
-    </div>
+<h2>Global Panel</h2>
+<div class="global-panel">
+    <label id="modNC">NC</label>
+    <label id="modPQ">PQ</label>
+    <label id="modPipeline">Pipeline</label>
+    <label id="modAgent">Agent</label>
+    <label id="modMatrix">Matrix</label>
+    <label id="modRESPO">RESPO</label>
+    <label id="modSDSA">SDSA</label>
+    <label id="modRuntime">Runtime</label>
+</div>
 
-    <h2>NC Module</h2>
-    <button id="ncPredict">NC Predict</button>
-    <button id="ncAnalyse">NC Analyse</button>
-    <button id="ncFlowBoost">NC Flow Booster</button>
-    <button id="ncRespoRouter">NC RESPO Router</button>
-    <button id="ncPipelineAuto">NC Pipeline Auto</button>
-    <button id="ncStabilisationMonitor">NC Stabilisations‑Monitor</button>
+<h2>NC Module</h2>
+<button id="ncPredict">NC Predict</button>
+<button id="ncAnalyse">NC Analyse</button>
+<button id="ncFlowBoost">NC Flow Booster</button>
+<button id="ncRespoRouter">NC RESPO Router</button>
+<button id="ncPipelineAuto">NC Pipeline Auto</button>
+<button id="ncStabilisationMonitor">NC Stabilisations‑Monitor</button>
 
-    <pre id="ncOutput"></pre>
+<pre id="ncOutput"></pre>
 
-    <h2>PQ Modus</h2>
-    <button id="pqNormal">Interaktion Normal</button>
-    <button id="pqEdit">Edit</button>
+<h2>Matrix</h2>
+<button id="matrixRefresh">Matrix aktualisieren</button>
+<div id="matrix" class="matrix"></div>
 
-    <h2>Pipeline</h2>
-    <button id="runPipeline">Pipeline starten</button>
-
-    <h2>9×9 Matrix</h2>
-    <button id="matrixRefresh">Matrix aktualisieren</button>
-    <div id="matrix" class="matrix"></div>
-
-    <h2>Agent Modus</h2>
-    <button id="agentOn">Autonom AN</button>
-    <button id="agentOff">Autonom AUS</button>
-
-    <h2>NC_HUB_ALL</h2>
-    <button id="runNCHubAll">NC_HUB_ALL ausführen</button>
-    <pre id="hubOutput"></pre>
-
-    <h2>System CSV</h2>
-    <button id="loadSystemCSV">System laden</button>
-    <button id="loadRespoCSV">RESPO laden</button>
-
-    <script type="module" src="./runtime/RUN.js"></script>
+<script type="module" src="./runtime/RUN.js"></script>
 </body>
 </html>
