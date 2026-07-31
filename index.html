@@ -1,15 +1,3 @@
-<!DOCTYPE html>
-<html lang="de">
-<head>
-    <meta charset="UTF-8">
-    <title>https://copilot.microsoft.com/conversations/join/CXiKRzoKDSF4CuGXHdpRo</title>
-
-    <!-- Styles -->
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="./CSS/AG.css">
-</head>
-
-<body>
 <h2>CO Module</h2>
 
 <label>
@@ -30,97 +18,6 @@
 <button id="runCO">CO ausführen</button>
 
 <pre id="coOutput"></pre>
-
-<h2>NC Module (unten)</h2>
-
-<label>
-  KI Modul
-  <input type="checkbox" id="swKI2">
-</label>
-
-<label>
-  AI Modul
-  <input type="checkbox" id="swAI2">
-</label>
-
-<label>
-  SCALE Modul
-  <input type="checkbox" id="swSCALE2">
-</label>
-
-<label>
-  HUB_6D Modul
-  <input type="checkbox" id="swHUB6D2">
-</label>
-
-<button id="runNC2">NC_HUB_ALL ausführen</button>
-
-<pre id="ncOutput2"></pre>
-
-
-    
-<h1>https://copilot.microsoft.com/conversations/join/CXiKRzoKDSF4CuGXHdpRo </h1>
-<div id="status">https://copilot.microsoft.com/conversations/join/CXiKRzoKDSF4CuGXHdpRo</div>
-
-<h2>NC Module</h2>
-
-<label>
-  KI Modul
-  <input type="checkbox" id="swKI">
-</label>
-
-<label>
-  AI Modul
-  <input type="checkbox" id="swAI">
-</label>
-
-<label>
-  SCALE Modul
-  <input type="checkbox" id="swSCALE">
-</label>
-
-<label>
-  HUB_6D Modul
-  <input type="checkbox" id="swHUB6D">
-</label>
-
-<button id="runNC">NC_HUB_ALL ausführen</button>
-
-<pre id="ncOutput"></pre>
-
-    
-<!-- ORBIT PANEL -->
-<h2>Orbit‑Continuum</h2>
-<div class="orbit-panel">
-    <div class="orbit-button" id="orbitNC">NC Orbit</div>
-    <div class="orbit-button" id="orbitCO">CO Orbit</div>
-    <div class="orbit-button" id="orbitAGENT">AGENT Orbit</div>
-    <div class="orbit-button" id="orbitRESPO">RESPO Orbit</div>
-    <div class="orbit-button" id="orbitSDSA">SDSA Orbit</div>
-    <div class="orbit-button" id="orbitPipeline">Pipeline Orbit</div>
-    <div class="orbit-button" id="orbitPQ">PQ Orbit</div>
-    <div class="orbit-button" id="orbitPP">PP Orbit</div>
-    <div class="orbit-button" id="orbitMatrix">Matrix Orbit</div>
-</div>
-
-<!-- NC MODULE -->
-<h2>NC Module</h2>
-<button id="ncPredict">NC Predict</button>
-<button id="ncAnalyse">NC Analyse</button>
-<button id="ncFlowBoost">NC Flow Booster</button>
-<button id="ncRespoRouter">NC RESPO Router</button>
-<button id="ncPipelineAuto">NC Pipeline Auto</button>
-<button id="ncStabilisationMonitor">NC Stabilisations‑Monitor</button>
-
-<pre id="ncOutput"></pre>
-
-<!-- MATRIX -->
-<h2>Matrix</h2>
-<button id="matrixRefresh">Matrix aktualisieren</button>
-<div id="matrix" class="matrix"></div>
-
-<!-- Runtime Loader -->
-<script type="module" src="./runtime/RUN.js"></script>
 export const CO_CACHE = {
     Chat: true,
     Search: true,
@@ -135,6 +32,7 @@ export function loadCO() {
     const data = localStorage.getItem("CO_CACHE");
     if (data) Object.assign(CO_CACHE, JSON.parse(data));
 }
+
 export function initCOUI() {
 
     const swCOChat = document.getElementById("swCOChat");
@@ -153,15 +51,23 @@ export function initCOUI() {
     swCOSearch.onchange = () => { CO_CACHE.Search = swCOSearch.checked; saveCO(); };
     swCOLoad.onchange = () => { CO_CACHE.Load = swCOLoad.checked; saveCO(); };
 
-    runCO.onclick = () => {
+    runCO.onclick = async () => {
+
+        coOutput.textContent = "CO wird ausgeführt…";
+
+        await new Promise(r => setTimeout(r, 50)); // WICHTIG: Runtime stabilisieren
+
         const out = {
             chat: CO_CACHE.Chat ? CO_RUNTIME.chat("Hallo CO!") : "Chat deaktiviert",
             search: CO_CACHE.Search ? CO_RUNTIME.search("Test", []) : "Search deaktiviert",
-            load: CO_CACHE.Load ? CO_RUNTIME.load("system-status.csv") : "Load deaktiviert"
+            load: CO_CACHE.Load ? await CO_RUNTIME.load("system-status.csv") : "Load deaktiviert"
         };
+
         coOutput.textContent = JSON.stringify(out, null, 2);
     };
 }
+import { initCOUI } from "./co-ui.js";
 
-</body>
-</html>
+CO_RUNTIME.init().then(() => {
+    initCOUI();
+});
