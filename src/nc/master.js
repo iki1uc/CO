@@ -2,81 +2,79 @@ export const NC = {
 
     init(sdsA, respo, pipeline, csvStatus) {
 
+        // SDSA Daten
         const axes = sdsA.getAxes();
         const stabilisation = sdsA.getStabilisation();
         const flow = sdsA.getFlow();
         const boost = sdsA.getBoost();
 
+        // RESPO Daten
+        const respoState = respo.getMasterState();
+        const respoAxes = respo.getAxes();
+        const respoFlow = respo.getFlow();
+        const respoBoost = respo.getBoost();
+
         return {
 
-            // -----------------------------
-            // NC Predict Modul
-            // -----------------------------
+            // NC Predict
             predict(input) {
                 return {
                     module: "NC_PREDICT",
                     color: "blue",
                     input,
-                    axes,
-                    flow,
-                    boost,
-                    prediction: `${input} → Prognose: ${flow * boost}`
+                    axes: respoAxes,
+                    flow: respoFlow,
+                    boost: respoBoost,
+                    respoState,
+                    prediction: `${input} → Prognose: ${respoFlow * respoBoost}`
                 };
             },
 
-            // -----------------------------
-            // NC Analyse Modul
-            // -----------------------------
+            // NC Analyse
             analyse(data) {
                 return {
                     module: "NC_ANALYSE",
                     color: "green",
                     data,
-                    axes,
+                    axes: respoAxes,
                     stabilisation,
-                    flow,
-                    boost,
-                    score: flow + boost,
+                    flow: respoFlow,
+                    boost: respoBoost,
+                    respoState,
+                    score: respoFlow + respoBoost,
                     info: "Analyse abgeschlossen"
                 };
             },
 
-            // -----------------------------
             // NC Flow Booster
-            // -----------------------------
             flowBooster(level = 1) {
-                const boostedFlow = flow * (boost * level);
+                const boostedFlow = respoFlow * (respoBoost * level);
                 return {
                     module: "NC_FLOW_BOOSTER",
                     color: "orange",
                     level,
-                    originalFlow: flow,
+                    originalFlow: respoFlow,
                     boostedFlow,
-                    axes,
+                    axes: respoAxes,
+                    respoState,
                     info: "Flow erfolgreich verstärkt"
                 };
             },
 
-            // -----------------------------
             // NC RESPO Router
-            // -----------------------------
             respoRouter() {
-                const state = respo.getMasterState();
                 return {
                     module: "NC_RESPO_ROUTER",
                     color: "purple",
-                    state,
-                    axes,
-                    stabilisation,
-                    flow,
-                    boost,
-                    route: `RESPO Route aktiv: ${state}`
+                    state: respoState,
+                    axes: respoAxes,
+                    flow: respoFlow,
+                    boost: respoBoost,
+                    route: `RESPO Route aktiv: ${respoState}`
                 };
             },
 
-            // -----------------------------
             // NC Pipeline Auto‑Runner
-            // -----------------------------
             pipelineAuto(process) {
                 const result = pipeline.run(process);
                 return {
@@ -84,37 +82,32 @@ export const NC = {
                     color: "red",
                     process,
                     result,
+                    respoState,
                     info: "Pipeline automatisch ausgeführt"
                 };
             },
-function highlightNC(color) {
-    ncOutput.className = "nc-" + color;
-}
-highlightNC("blue");
 
-            // -----------------------------
             // NC Stabilisations‑Monitor
-            // -----------------------------
             stabilisationMonitor() {
                 return {
                     module: "NC_STABILISATION_MONITOR",
                     color: "cyan",
                     stabilisation,
-                    axes,
-                    flow,
-                    boost,
+                    axes: respoAxes,
+                    flow: respoFlow,
+                    boost: respoBoost,
+                    respoState,
                     status: stabilisation > 0 ? "STABIL" : "INSTABIL"
                 };
             },
 
-            // -----------------------------
-            // CSV‑Status‑Integration
-            // -----------------------------
+            // CSV Status
             applyStatus() {
                 return {
                     module: "NC_STATUS",
                     color: "yellow",
                     csv: csvStatus,
+                    respoState,
                     applied: true
                 };
             }
