@@ -28,7 +28,9 @@ function applySystemCSV(csv) {
             if (row[1] === "ki") swKI.checked = true;
             if (row[1] === "ai") swAI.checked = true;
             if (row[1] === "scale") swSCALE.checked = true;
-            if (row[1] === "hub6d") swHUB6D.checked = true;
+nc.extend("predict", (x) => x * 2);
+
+if (row[1] === "hub6d") swHUB6D.checked = true;
         }
     });
 }
