@@ -4,6 +4,14 @@
 </div>
 
 <div class="box">
+  <h2>System CSV</h2>
+  <button id="loadSystem">System laden</button>
+  <button id="loadRespo">RESPO laden</button>
+  <pre id="csvOutput"></pre>
+</div>
+
+
+<div class="box">
   <h2>CO Chat</h2>
   <input id="coInput" placeholder="Nachricht an CO…">
   <button id="coSend">Senden</button>
@@ -13,8 +21,15 @@ async function loadCSV() {
     const url = "https://raw.githubusercontent.com/iki1uc/CO/main/fehler-ursache-5.csv";
     const res = await fetch(url);
     const text = await res.text();
-    return text.split("\n").map(row => row.split(","));
+const res = await fetch(url);
+    const text = await res.text();
+    return text.split("\n").map(r => r.split(","));
+return text.split("\n").map(row => row.split(","));
 }
+
+
+
+
 
 <div class="box">
   <h2>PQ Modus</h2>
