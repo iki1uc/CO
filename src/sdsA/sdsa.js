@@ -19,3 +19,7 @@ async loadAll() {
     };
 }
 1
+getAxes() { return this.axes; }
+getFlow() { return this.flow; }
+getBoost() { return this.boost; }
+getStabilisation() { return this.STATUS?.length || 1; }
