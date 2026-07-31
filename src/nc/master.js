@@ -2,17 +2,17 @@ export const NC = {
 
     init(sdsA, respo, pipeline, csvStatus) {
 
-        // SDSA Daten
-        const axes = sdsA.getAxes();
-        const stabilisation = sdsA.getStabilisation();
-        const flow = sdsA.getFlow();
-        const boost = sdsA.getBoost();
+        // SDSA Daten (mit Fallback)
+        const axes = sdsA.getAxes?.() ?? sdsA.axes ?? 81;
+        const stabilisation = sdsA.getStabilisation?.() ?? sdsA.FEHLER?.length ?? 1;
+        const flow = sdsA.getFlow?.() ?? sdsA.PIPE?.length ?? 1;
+        const boost = sdsA.getBoost?.() ?? sdsA.STATUS?.length ?? 1;
 
-        // RESPO Daten
-        const respoState = respo.getMasterState();
-        const respoAxes = respo.getAxes();
-        const respoFlow = respo.getFlow();
-        const respoBoost = respo.getBoost();
+        // RESPO Daten (mit Fallback)
+        const respoState = respo.getMasterState?.() ?? "unknown";
+        const respoAxes = respo.getAxes?.() ?? axes;
+        const respoFlow = respo.getFlow?.() ?? flow;
+        const respoBoost = respo.getBoost?.() ?? boost;
 
         return {
 
