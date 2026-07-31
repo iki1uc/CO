@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>CO Copilot Instance</title>
-
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -15,6 +14,18 @@
     <h2>CO Chat</h2>
     <textarea id="chatInput" placeholder="Nachricht an CO…"></textarea>
     <button id="chatSend">Senden</button>
+
+    <h2>Globales Modul‑Panel</h2>
+    <div id="globalHub">
+        <label><input type="checkbox" id="modNC"> NC aktiv</label>
+        <label><input type="checkbox" id="modPQ"> PQ aktiv</label>
+        <label><input type="checkbox" id="modPipeline"> Pipeline aktiv</label>
+        <label><input type="checkbox" id="modAgent"> Agent aktiv</label>
+        <label><input type="checkbox" id="modMatrix"> Matrix aktiv</label>
+        <label><input type="checkbox" id="modRESPO"> RESPO aktiv</label>
+        <label><input type="checkbox" id="modSDSA"> SDSA aktiv</label>
+        <label><input type="checkbox" id="modRuntime"> Runtime aktiv</label>
+    </div>
 
     <h2>NC Module</h2>
     <button id="ncPredict">NC Predict</button>
@@ -40,12 +51,6 @@
     <h2>Agent Modus</h2>
     <button id="agentOn">Autonom AN</button>
     <button id="agentOff">Autonom AUS</button>
-
-    <h2>NC Module Schalter</h2>
-    <label><input type="checkbox" id="swKI"> KI Modul</label>
-    <label><input type="checkbox" id="swAI"> AI Modul</label>
-    <label><input type="checkbox" id="swSCALE"> SCALE Modul</label>
-    <label><input type="checkbox" id="swHUB6D"> HUB_6D Modul</label>
 
     <h2>NC_HUB_ALL</h2>
     <button id="runNCHubAll">NC_HUB_ALL ausführen</button>
