@@ -1,11 +1,3 @@
-import { COtriCOme9x9 } from "../runtime/COtri.js";
-import { COjoinTeam9x9 } from "../runtime/signal.js";
-import { CO_DECIDE } from "../co/BOOT.js";
-import { CO_RUNTIME } from "../co/runtime.js";
-import { RESPO_MODULE } from "../respo/respo.js";
-import { PQ_MODULE } from "../pq/pq.js";
-import { PP_MODULE } from "../pp/pp.js";
-
 function readMatrix9x9() {
     const out = [];
     for (let r = 1; r <= 9; r++) {
@@ -18,7 +10,6 @@ function readMatrix9x9() {
     }
     return out;
 }
-
 export function initCOUI() {
 
     const swCOChat = document.getElementById("swCOChat");
@@ -39,9 +30,9 @@ export function initCOUI() {
 
     runCO.onclick = async () => {
 
-        coOutput.textContent = "CO MASTER wird ausgeführt…";
+        coOutput.textContent = "CO wird ausgeführt…";
 
-        await new Promise(r => setTimeout(r, 50));
+        await new Promise(r => setTimeout(r, 50)); // stabilisiert Runtime
 
         // 1) Matrix lesen
         const matrix = readMatrix9x9();
