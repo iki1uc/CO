@@ -9,6 +9,23 @@
   <button id="loadRespo">RESPO laden</button>
   <pre id="csvOutput"></pre>
 </div>
+<div class="box">
+  <h2>System CSV</h2>
+  <button id="loadSystem">System laden</button>
+  <button id="loadRespo">RESPO laden</button>
+  <pre id="csvOutput"></pre>
+</div>
+document.getElementById("loadSystem").onclick = async () => {
+    const csv = await loadCSV("system-status.csv");
+    applySystemCSV(csv);
+    csvOutput.textContent = JSON.stringify(csv, null, 2);
+};
+
+document.getElementById("loadRespo").onclick = async () => {
+    const csv = await loadCSV("respo-master.csv");
+    applyRespoCSV(csv);
+    csvOutput.textContent = JSON.stringify(csv, null, 2);
+};
 
 
 <div class="box">
