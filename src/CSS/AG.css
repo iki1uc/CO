@@ -13,20 +13,22 @@
     transition: all 0.3s ease;
 }
 
+/* Aktiv / Inaktiv */
 .mod-active {
     background: #4caf5033;
     border: 2px solid #4caf50;
 }
-
 .mod-inactive {
     background: #f4433633;
     border: 2px solid #f44336;
 }
 
+/* XI / IX / X4 Modi */
 .mod-xi { background:#2196f333; border-color:#2196f3; }
 .mod-ix { background:#9c27b033; border-color:#9c27b0; }
 .mod-x4 { background:#ff980033; border-color:#ff9800; }
 
+/* Hover Animation */
 .global-panel label:hover {
     transform: scale(1.05);
 }
