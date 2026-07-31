@@ -1,5 +1,7 @@
-async function loadCSV(url) {
-    const res = await fetch(url);
-    const text = await res.text();
-    return text.split("\n").map(r => r.split(","));
-}
+master,state,axis,effect
+visual,boost,NE,heatmap+avatars+agentVis
+flow,dynamic,SE,rotation+matrixAnim
+memory,persist,NW,cache+switches
+analytics,mode,SW,filters+timeline
+export,ready,C,logExport+matrixSync
+pipeline,active,CORE,status+anim
