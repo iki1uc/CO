@@ -47,3 +47,15 @@ export function initOrbit() {
 
     updateOrbitUI();
 }
+import { renderOrbitInMatrix } from "./orbit-matrix.js";
+
+trigger("matrixRefresh", () => {
+    const matrix = document.getElementById("matrix");
+    matrix.innerHTML = "";
+    renderOrbitInMatrix(matrix);
+});
+function show(id, data) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.textContent = JSON.stringify(data, null, 2);
+}
