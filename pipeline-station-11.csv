@@ -1,0 +1,12 @@
+﻿Pipeline,Station,Aufgabe
+4,U4X (PP),"Bench, Operator, Plan, Input/Output"
+4,CPU,Code ausführen
+4,CACHE,Operatoren halten
+0,KI,"Kern, Entscheidung"
+1,DA,"Start, Prefetch"
+2,NE,"Fehler, Ghost"
+9,BEN,Vollendung
+∞,ULTRA3.0,"Fusion, Meta, Vector"
+GPU,Rendern
+CHDSK,Prüfen
+ROM,Speichern
