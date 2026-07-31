@@ -46,6 +46,16 @@
   <button id="runNC">NC_HUB_ALL ausführen</button>
   <pre id="ncOutput"></pre>
 </div>
+function NC_HUB_ALL(input) {
+    const out = {
+        ki: NC_MODULE.ki(input),
+        ai: NC_MODULE.ai(input),
+        scale: NC_MODULE.scale(42),
+        hub6d: NC_MODULE.hub6d(input),
+        respo: NC_MODULE.respoState()
+    };
+    return out;
+}
 
 <div class="box">
   <h2>System CSV</h2>
