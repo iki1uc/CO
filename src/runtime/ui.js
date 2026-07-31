@@ -1,103 +1,151 @@
-import { NC_MODULE, RESPO_MODULE, SDSA_MODULE, PIPELINE_MODULE } from "./runtime.js";
+// ===============================
+// IMPORTS
+// ===============================
 
-export async function initUI() {
+import { NC_HUB_ALL } from "./nc.js";
+import { updateOrbitUI } from "./orbit.js";
+import { ORBIT_CACHE } from "./orbit.js";
+import { CO_RUNTIME } from "./RUN.js";
+import { renderOrbitInMatrix } from "./orbit-matrix.js";
 
-    const ncOutput = document.getElementById("ncOutput");
-    const matrix = document.getElementById("matrix");
+// ===============================
+// UI INITIALISIERUNG
+// ===============================
 
-    // -----------------------------
-    // Fehler sollen NICHT stören
-    // -----------------------------
-    function safeRun(fn, label) {
+export function initUI() {
+
+    console.log("UI wird initialisiert…");
+
+    // -------------------------------
+    // NC BUTTONS
+    // -------------------------------
+
+    bindButton("ncPredict", () => {
+        const out = NC_HUB_ALL("predict");
+        show("ncOutput", out);
+    });
+
+    bindButton("ncAnalyse", () => {
+        const out = NC_HUB_ALL("analyse");
+        show("ncOutput", out);
+    });
+
+    bindButton("ncFlowBoost", () => {
+        const out = NC_HUB_ALL("flow");
+        show("ncOutput", out);
+    });
+
+    bindButton("ncRespoRouter", () => {
+        const out = NC_HUB_ALL("router");
+        show("ncOutput", out);
+    });
+
+    bindButton("ncPipelineAuto", () => {
+        const out = NC_HUB_ALL("pipeline");
+        show("ncOutput", out);
+    });
+
+    bindButton("ncStabilisationMonitor", () => {
+        const out = NC_HUB_ALL("monitor");
+        show("ncOutput", out);
+    });
+
+    // -------------------------------
+    // MATRIX BUTTON
+    // -------------------------------
+
+    bindButton("matrixRefresh", () => {
+        const matrix = document.getElementById("matrix");
+        matrix.innerHTML = "";
+        renderOrbitInMatrix(matrix);
+    });
+
+    // -------------------------------
+    // CO CHAT
+    // -------------------------------
+
+    const chatSend = document.getElementById("chatSend");
+    const chatInput = document.getElementById("chatInput");
+    const chatOut = document.getElementById("chatOutput");
+
+    if (chatSend && chatInput && chatOut) {
+        chatSend.onclick = () => {
+            const msg = chatInput.value.trim();
+            if (!msg) return;
+            const res = CO_RUNTIME.chat(msg);
+            chatOut.textContent = JSON.stringify(res, null, 2);
+        };
+    }
+
+    // -------------------------------
+    // PQ MODUS
+    // -------------------------------
+
+    const pqNormal = document.getElementById("pqNormal");
+    const pqEdit = document.getElementById("pqEdit");
+
+    if (pqNormal) pqNormal.onclick = () => setPQ("normal");
+    if (pqEdit) pqEdit.onclick = () => setPQ("edit");
+
+    // -------------------------------
+    // PIPELINE START
+    // -------------------------------
+
+    bindButton("pipelineStart", () => {
+        const res = CO_RUNTIME.search("start", { pipeline: "active" });
+        show("pipelineOutput", res);
+    });
+
+    // -------------------------------
+    // AGENT MODUS
+    // -------------------------------
+
+    bindButton("agentOn", () => {
+        ORBIT_CACHE.AGENT = "XI";
+        updateOrbitUI();
+    });
+
+    bindButton("agentOff", () => {
+        ORBIT_CACHE.AGENT = "IX";
+        updateOrbitUI();
+    });
+
+    // -------------------------------
+    // ORBIT UI UPDATE
+    // -------------------------------
+
+    updateOrbitUI();
+
+    console.log("UI vollständig geladen.");
+}
+
+// ===============================
+// HILFSFUNKTIONEN
+// ===============================
+
+function bindButton(id, fn) {
+    const el = document.getElementById(id);
+    if (!el) {
+        console.warn(`UI Warnung: Button "${id}" nicht gefunden.`);
+        return;
+    }
+    el.onclick = () => {
         try {
             fn();
         } catch (err) {
-            console.warn("UI‑Meldung:", label, err.message);
-            ncOutput.textContent = `⚠ ${label}: ${err.message}`;
+            console.warn(`UI Fehler (${id}):`, err.message);
         }
-    }
+    };
+}
 
-    // -----------------------------
-    // NC Farben
-    // -----------------------------
-    function highlightNC(color) {
-        ncOutput.className = "nc-" + color;
-    }
+function show(id, data) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.textContent = JSON.stringify(data, null, 2);
+}
 
-    // -----------------------------
-    // NC Buttons
-    // -----------------------------
-    document.getElementById("ncPredict").onclick = () =>
-        safeRun(() => {
-            const out = NC_MODULE.predict("input");
-            highlightNC(out.color);
-            ncOutput.textContent = JSON.stringify(out, null, 2);
-        }, "NC Predict");
-
-    document.getElementById("ncAnalyse").onclick = () =>
-        safeRun(() => {
-            const out = NC_MODULE.analyse("data");
-            highlightNC(out.color);
-            ncOutput.textContent = JSON.stringify(out, null, 2);
-        }, "NC Analyse");
-
-    document.getElementById("ncFlowBoost").onclick = () =>
-        safeRun(() => {
-            const out = NC_MODULE.flowBooster(2);
-            highlightNC(out.color);
-            ncOutput.textContent = JSON.stringify(out, null, 2);
-        }, "NC Flow Booster");
-
-    document.getElementById("ncRespoRouter").onclick = () =>
-        safeRun(() => {
-            const out = NC_MODULE.respoRouter();
-            highlightNC(out.color);
-            ncOutput.textContent = JSON.stringify(out, null, 2);
-        }, "NC RESPO Router");
-
-    document.getElementById("ncPipelineAuto").onclick = () =>
-        safeRun(() => {
-            const out = NC_MODULE.pipelineAuto("v1024");
-            highlightNC(out.color);
-            ncOutput.textContent = JSON.stringify(out, null, 2);
-        }, "NC Pipeline Auto");
-
-    document.getElementById("ncStabilisationMonitor").onclick = () =>
-        safeRun(() => {
-            const out = NC_MODULE.stabilisationMonitor();
-            highlightNC(out.color);
-            ncOutput.textContent = JSON.stringify(out, null, 2);
-        }, "NC Stabilisations‑Monitor");
-
-    // -----------------------------
-    // NC_HUB_ALL in Matrix integrieren
-    // -----------------------------
-    document.getElementById("matrixRefresh").onclick = () =>
-        safeRun(() => {
-            renderMatrix();
-        }, "Matrix Refresh");
-
-    function renderMatrix() {
-        matrix.innerHTML = "";
-
-        const hub = NC_HUB_ALL("x");
-
-        const modules = [
-            hub.predict,
-            hub.analyse,
-            hub.flowBoost,
-            hub.respoRouter,
-            hub.pipelineAuto,
-            hub.stabilisationMonitor
-        ];
-
-        modules.forEach(m => {
-            const cell = document.createElement("div");
-            cell.className = "matrix-cell nc-" + m.color;
-            cell.textContent = `${m.module} (${m.respoState})`;
-            matrix.appendChild(cell);
-        });
-    }
-
-    console.log("UI vollständig geladen.");
+function setPQ(mode) {
+    const out = document.getElementById("pqOutput");
+    if (!out) return;
+    out.textContent = `PQ Modus: ${mode}`;
 }
