@@ -5,10 +5,9 @@ export async function initUI() {
     const ncOutput = document.getElementById("ncOutput");
     const matrix = document.getElementById("matrix");
 
-    function highlightNC(color) {
-        ncOutput.className = "nc-" + color;
-    }
-
+    // -----------------------------
+    // Fehler sollen NICHT stören
+    // -----------------------------
     function safeRun(fn, label) {
         try {
             fn();
@@ -16,6 +15,13 @@ export async function initUI() {
             console.warn("UI‑Meldung:", label, err.message);
             ncOutput.textContent = `⚠ ${label}: ${err.message}`;
         }
+    }
+
+    // -----------------------------
+    // NC Farben
+    // -----------------------------
+    function highlightNC(color) {
+        ncOutput.className = "nc-" + color;
     }
 
     // -----------------------------
@@ -64,7 +70,7 @@ export async function initUI() {
         }, "NC Stabilisations‑Monitor");
 
     // -----------------------------
-    // Matrix Integration
+    // NC_HUB_ALL in Matrix integrieren
     // -----------------------------
     document.getElementById("matrixRefresh").onclick = () =>
         safeRun(() => {
@@ -74,13 +80,15 @@ export async function initUI() {
     function renderMatrix() {
         matrix.innerHTML = "";
 
+        const hub = NC_HUB_ALL("x");
+
         const modules = [
-            NC_MODULE.predict("x"),
-            NC_MODULE.analyse("x"),
-            NC_MODULE.flowBooster(),
-            NC_MODULE.respoRouter(),
-            NC_MODULE.pipelineAuto("x"),
-            NC_MODULE.stabilisationMonitor()
+            hub.predict,
+            hub.analyse,
+            hub.flowBoost,
+            hub.respoRouter,
+            hub.pipelineAuto,
+            hub.stabilisationMonitor
         ];
 
         modules.forEach(m => {
