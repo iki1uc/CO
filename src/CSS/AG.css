@@ -1,34 +1,47 @@
-.global-panel {
+.orbit-panel {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 12px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
     margin: 20px 0;
 }
 
-.global-panel label {
-    padding: 10px;
-    border-radius: 8px;
+.orbit-button {
+    padding: 14px;
+    border-radius: 50%;
+    text-align: center;
     font-weight: bold;
     cursor: pointer;
-    transition: all 0.3s ease;
+    background: #111;
+    color: #fff;
+    border: 2px solid #333;
+    transition: all 0.4s ease;
 }
 
-/* Aktiv / Inaktiv */
-.mod-active {
-    background: #4caf5033;
-    border: 2px solid #4caf50;
+/* XI – expand orbit */
+.orbit-xi {
+    animation: orbitXI 2.4s infinite ease-in-out;
 }
-.mod-inactive {
-    background: #f4433633;
-    border: 2px solid #f44336;
+@keyframes orbitXI {
+    0% { transform: scale(1) rotate(0deg); }
+    50% { transform: scale(1.15) rotate(12deg); }
+    100% { transform: scale(1) rotate(0deg); }
 }
 
-/* XI / IX / X4 Modi */
-.mod-xi { background:#2196f333; border-color:#2196f3; }
-.mod-ix { background:#9c27b033; border-color:#9c27b0; }
-.mod-x4 { background:#ff980033; border-color:#ff9800; }
+/* IX – compress orbit */
+.orbit-ix {
+    animation: orbitIX 2.0s infinite ease-in-out;
+}
+@keyframes orbitIX {
+    0% { transform: scale(1) rotate(0deg); }
+    50% { transform: scale(0.85) rotate(-10deg); }
+    100% { transform: scale(1) rotate(0deg); }
+}
 
-/* Hover Animation */
-.global-panel label:hover {
-    transform: scale(1.05);
+/* X4 – rotation orbit */
+.orbit-x4 {
+    animation: orbitX4 3.2s infinite linear;
+}
+@keyframes orbitX4 {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
