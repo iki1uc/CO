@@ -1,0 +1,9 @@
+module,status,info
+pipeline,ok,läuft stabil
+pq,interaktion,aktiv
+agent,auto,on
+matrix,rotate,active
+nc,ki,true
+nc,ai,false
+nc,scale,true
+nc,hub6d,false
