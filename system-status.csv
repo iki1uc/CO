@@ -11,8 +11,9 @@ function applySystemCSV(csv) {
     csv.forEach(row => {
         const module = row[0];
         const status = row[1];
-
-        if (module === "pipeline" && status === "ok")
+const csvStatus = await loadCSV("system-status.csv");
+NC_MODULE = NC.init(SDSA_MODULE, RESPO_MODULE, PIPELINE_MODULE, csvStatus);
+if (module === "pipeline" && status === "ok")
             runPipeline.style.background = "#8df58d";
 
         if (module === "pq")
