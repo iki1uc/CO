@@ -1,95 +1,60 @@
-<div class="box">
-  <h2>CO Copilot Instance</h2>
-  <pre id="coInstance">Wird geladen…</pre>
-</div>
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>CO Copilot Instance</title>
 
-<div class="box">
-  <h2>CO Chat</h2>
-  <input id="coInput" placeholder="Nachricht an CO…">
-  <button id="coSend">Senden</button>
-  <pre id="coChat"></pre>
-</div>
-<button id="ncPredict">NC Predict</button>
-<button id="ncAnalyse">NC Analyse</button>
-<button id="ncFlowBoost">NC Flow Booster</button>
-<button id="ncRespoRouter">NC RESPO Router</button>
-<button id="ncPipelineAuto">NC Pipeline Auto</button>
-<button id="ncStabilisationMonitor">NC Stabilisations‑Monitor</button>
-document.getElementById("ncPredict").onclick = () =>
-    ncOutput.textContent = JSON.stringify(NC_MODULE.predict("input"), null, 2);
+    <link rel="stylesheet" href="style.css">
+</head>
 
-document.getElementById("ncAnalyse").onclick = () =>
-    ncOutput.textContent = JSON.stringify(NC_MODULE.analyse("data"), null, 2);
+<body>
 
-document.getElementById("ncFlowBoost").onclick = () =>
-    ncOutput.textContent = JSON.stringify(NC_MODULE.flowBooster(2), null, 2);
+    <h1>CO Copilot Instance</h1>
+    <div id="status">Wird geladen…</div>
 
-document.getElementById("ncRespoRouter").onclick = () =>
-    ncOutput.textContent = JSON.stringify(NC_MODULE.respoRouter(), null, 2);
+    <h2>CO Chat</h2>
+    <textarea id="chatInput" placeholder="Nachricht an CO…"></textarea>
+    <button id="chatSend">Senden</button>
 
-document.getElementById("ncPipelineAuto").onclick = () =>
-    ncOutput.textContent = JSON.stringify(NC_MODULE.pipelineAuto("v1024"), null, 2);
+    <h2>NC Module</h2>
+    <button id="ncPredict">NC Predict</button>
+    <button id="ncAnalyse">NC Analyse</button>
+    <button id="ncFlowBoost">NC Flow Booster</button>
+    <button id="ncRespoRouter">NC RESPO Router</button>
+    <button id="ncPipelineAuto">NC Pipeline Auto</button>
+    <button id="ncStabilisationMonitor">NC Stabilisations‑Monitor</button>
 
-document.getElementById("ncStabilisationMonitor").onclick = () =>
-    ncOutput.textContent = JSON.stringify(NC_MODULE.stabilisationMonitor(), null, 2);
-.nc-blue { background:#007bff20; }
-.nc-green { background:#28a74520; }
-.nc-orange { background:#fd7e1420; }
-.nc-purple { background:#6f42c120; }
-.nc-red { background:#dc354520; }
-.nc-cyan { background:#17a2b820; }
-.nc-yellow { background:#ffc10720; }
+    <pre id="ncOutput"></pre>
 
-<div class="box">
-  <h2>PQ Modus</h2>
-  <button id="pqInteraktion">Interaktion</button>
-  <button id="pqNormal">Normal</button>
-  <button id="pqEdit">Edit</button>
-  <pre id="pqOutput"></pre>
-</div>
+    <h2>PQ Modus</h2>
+    <button id="pqNormal">Interaktion Normal</button>
+    <button id="pqEdit">Edit</button>
 
-<div class="box">
-  <h2>Pipeline</h2>
-  <button id="runPipeline">Pipeline starten</button>
-  <pre id="pipelineOutput"></pre>
-</div>
+    <h2>Pipeline</h2>
+    <button id="runPipeline">Pipeline starten</button>
 
-<div class="box">
-  <h2>9×9 Matrix</h2>
-  <div id="matrix"></div>
-  <pre id="matrixOutput"></pre>
-</div>
+    <h2>9×9 Matrix</h2>
+    <button id="matrixRefresh">Matrix aktualisieren</button>
+    <div id="matrix" class="matrix"></div>
 
-<div class="box">
-  <h2>Agent Modus</h2>
-  <button id="agentOn">Autonom AN</button>
-  <button id="agentOff">Autonom AUS</button>
-  <pre id="agentOutput"></pre>
-</div>
+    <h2>Agent Modus</h2>
+    <button id="agentOn">Autonom AN</button>
+    <button id="agentOff">Autonom AUS</button>
 
-<div class="box">
-  <h2>NC Module</h2>
-  <label><input type="checkbox" id="swKI"> KI Modul</label><br>
-  <label><input type="checkbox" id="swAI"> AI Modul</label><br>
-  <label><input type="checkbox" id="swSCALE"> SCALE Modul</label><br>
-  <label><input type="checkbox" id="swHUB6D"> HUB_6D Modul</label><br>
-  <button id="runNC">NC_HUB_ALL ausführen</button>
-  <pre id="ncOutput"></pre>
-</div>
-function NC_HUB_ALL(input) {
-    const out = {
-        ki: NC_MODULE.ki(input),
-        ai: NC_MODULE.ai(input),
-        scale: NC_MODULE.scale(42),
-        hub6d: NC_MODULE.hub6d(input),
-        respo: NC_MODULE.respoState()
-    };
-    return out;
-}
+    <h2>NC Module Schalter</h2>
+    <label><input type="checkbox" id="swKI"> KI Modul</label>
+    <label><input type="checkbox" id="swAI"> AI Modul</label>
+    <label><input type="checkbox" id="swSCALE"> SCALE Modul</label>
+    <label><input type="checkbox" id="swHUB6D"> HUB_6D Modul</label>
 
-<div class="box">
-  <h2>System CSV</h2>
-  <button id="loadSystem">System laden</button>
-  <button id="loadRespo">RESPO laden</button>
-  <pre id="csvOutput"></pre>
-</div>
+    <h2>NC_HUB_ALL</h2>
+    <button id="runNCHubAll">NC_HUB_ALL ausführen</button>
+    <pre id="hubOutput"></pre>
+
+    <h2>System CSV</h2>
+    <button id="loadSystemCSV">System laden</button>
+    <button id="loadRespoCSV">RESPO laden</button>
+
+    <script type="module" src="./runtime/RUN.js"></script>
+</body>
+</html>
