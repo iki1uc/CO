@@ -1,34 +1,95 @@
-import { CO_API } from "./api.js";
-import { CO_STATION } from "./station.js";
-import { CO_RUNTIME } from "./runtime.js";
+export const NC = {
 
-import { CO_SYSTEM_MAP } from "./KG.js";
-import { CO_ANALYZE } from "./CO.js";
-import { CO_DECIDE } from "./BOOT.js";
+    init(sdsA, respo, pipeline) {
 
-import { SDSA } from "../SDSA/station.js";
-import { PQ } from "../PQ/station.js";
-import { PP } from "../PP/station.js";
+        const axes = sdsA.getAxes();
+        const stabilisation = sdsA.getStabilisation();
+        const flow = sdsA.getFlow();
+        const boost = sdsA.getBoost();
 
-export const CO = {
-    api: CO_API,
-    station: CO_STATION,
-    runtime: CO_RUNTIME,
-    map: CO_SYSTEM_MAP,
-    analyze: CO_ANALYZE,
-    decide: CO_DECIDE,
-
-    boot(respo) {
         return {
-            respo,
-            sdsa: SDSA.boot(respo),
-            pqCopilot: PQ.boot(respo),
-            ppCopilot: PP.boot(respo),
 
-            runtime: CO_RUNTIME,
+            // --- CORE ---
+            core(process) {
+                return {
+                    process,
+                    axes,
+                    stabilisation,
+                    flow,
+                    boost,
+                    status: "NC_CORE_OK"
+                };
+            },
 
-            degree: 360,
-            fulfillment: 100
+            // --- KI ---
+            ki(input) {
+                return {
+                    module: "KI",
+                    input,
+                    axes,
+                    flow,
+                    result: `KI verarbeitet: ${input}`
+                };
+            },
+
+            // --- AI ---
+            ai(input) {
+                return {
+                    module: "AI",
+                    input,
+                    stabilisation,
+                    boost,
+                    result: `AI verarbeitet: ${input}`
+                };
+            },
+
+            // --- SCALE ---
+            scale(value) {
+                return {
+                    module: "SCALE",
+                    value,
+                    scaled: value * boost,
+                    info: "SCALE erfolgreich"
+                };
+            },
+
+            // --- HUB_6D ---
+            hub6d(data) {
+                return {
+                    module: "HUB_6D",
+                    data,
+                    axes,
+                    stabilisation,
+                    flow,
+                    boost,
+                    info: "6D-Hub aktiv"
+                };
+            },
+
+            // --- PIPELINE ---
+            pipeline(process) {
+                return pipeline.run(process);
+            },
+
+            // --- RESPO ---
+            respoState() {
+                return respo.getMasterState();
+            },
+
+            // --- STATUS CSV ---
+            applyStatus(csv) {
+                return {
+                    module: "NC_STATUS",
+                    csv,
+                    applied: true
+                };
+            },
+
+            // --- EXTENSION SLOT ---
+            extend(name, fn) {
+                this[name] = fn;
+                return `NC Modul erweitert: ${name}`;
+            }
         };
     }
 };
