@@ -1,6 +1,6 @@
 export const NC = {
 
-    init(sdsA, respo, pipeline) {
+    init(sdsA, respo, pipeline, csvStatus) {
 
         const axes = sdsA.getAxes();
         const stabilisation = sdsA.getStabilisation();
@@ -10,94 +10,27 @@ export const NC = {
         return {
 
             // -----------------------------
-            // CORE
+            // NC Predict Modul
             // -----------------------------
-            core(process) {
-                return {
-                    module: "NC_CORE",
-                    process,
-                    axes,
-                    stabilisation,
-                    flow,
-                    boost,
-                    status: "NC_CORE_OK"
-                };
-            },
-
-            // -----------------------------
-            // KI
-            // -----------------------------
-            ki(input) {
-                return {
-                    module: "KI",
-                    input,
-                    axes,
-                    flow,
-                    result: `KI verarbeitet: ${input}`
-                };
-            },
-
-            // -----------------------------
-            // AI
-            // -----------------------------
-            ai(input) {
-                return {
-                    module: "AI",
-                    input,
-                    stabilisation,
-                    boost,
-                    result: `AI verarbeitet: ${input}`
-                };
-            },
-
-            // -----------------------------
-            // SCALE
-            // -----------------------------
-            scale(value) {
-                return {
-                    module: "SCALE",
-                    value,
-                    scaled: value * boost,
-                    info: "SCALE erfolgreich"
-                };
-            },
-
-            // -----------------------------
-            // HUB_6D
-            // -----------------------------
-            hub6d(data) {
-                return {
-                    module: "HUB_6D",
-                    data,
-                    axes,
-                    stabilisation,
-                    flow,
-                    boost,
-                    info: "6D-Hub aktiv"
-                };
-            },
-
-            // ============================================================
-            // 🔮 NC PREDICT MODUL
-            // ============================================================
             predict(input) {
-                const prediction = `${input} → Prognose: ${flow * boost}`;
                 return {
                     module: "NC_PREDICT",
+                    color: "blue",
                     input,
                     axes,
                     flow,
                     boost,
-                    prediction
+                    prediction: `${input} → Prognose: ${flow * boost}`
                 };
             },
 
-            // ============================================================
-            // 📊 NC ANALYSE MODUL
-            // ============================================================
+            // -----------------------------
+            // NC Analyse Modul
+            // -----------------------------
             analyse(data) {
                 return {
                     module: "NC_ANALYSE",
+                    color: "green",
                     data,
                     axes,
                     stabilisation,
@@ -108,13 +41,14 @@ export const NC = {
                 };
             },
 
-            // ============================================================
-            // ⚡ NC FLOW BOOSTER
-            // ============================================================
+            // -----------------------------
+            // NC Flow Booster
+            // -----------------------------
             flowBooster(level = 1) {
                 const boostedFlow = flow * (boost * level);
                 return {
                     module: "NC_FLOW_BOOSTER",
+                    color: "orange",
                     level,
                     originalFlow: flow,
                     boostedFlow,
@@ -123,13 +57,14 @@ export const NC = {
                 };
             },
 
-            // ============================================================
-            // 🔁 NC RESPO ROUTER
-            // ============================================================
+            // -----------------------------
+            // NC RESPO Router
+            // -----------------------------
             respoRouter() {
                 const state = respo.getMasterState();
                 return {
                     module: "NC_RESPO_ROUTER",
+                    color: "purple",
                     state,
                     axes,
                     stabilisation,
@@ -139,25 +74,27 @@ export const NC = {
                 };
             },
 
-            // ============================================================
-            // 🚀 NC PIPELINE AUTO-RUNNER
-            // ============================================================
+            // -----------------------------
+            // NC Pipeline Auto‑Runner
+            // -----------------------------
             pipelineAuto(process) {
                 const result = pipeline.run(process);
                 return {
                     module: "NC_PIPELINE_AUTO",
+                    color: "red",
                     process,
                     result,
                     info: "Pipeline automatisch ausgeführt"
                 };
             },
 
-            // ============================================================
-            // 🛡️ NC STABILISATIONS-MONITOR
-            // ============================================================
+            // -----------------------------
+            // NC Stabilisations‑Monitor
+            // -----------------------------
             stabilisationMonitor() {
                 return {
                     module: "NC_STABILISATION_MONITOR",
+                    color: "cyan",
                     stabilisation,
                     axes,
                     flow,
@@ -166,12 +103,16 @@ export const NC = {
                 };
             },
 
-            // ============================================================
-            // EXTENSION SLOT
-            // ============================================================
-            extend(name, fn) {
-                this[name] = fn;
-                return `NC Modul erweitert: ${name}`;
+            // -----------------------------
+            // CSV‑Status‑Integration
+            // -----------------------------
+            applyStatus() {
+                return {
+                    module: "NC_STATUS",
+                    color: "yellow",
+                    csv: csvStatus,
+                    applied: true
+                };
             }
         };
     }
