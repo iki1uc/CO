@@ -7,3 +7,28 @@ nc,ki,true
 nc,ai,false
 nc,scale,true
 nc,hub6d,false
+function applySystemCSV(csv) {
+    csv.forEach(row => {
+        const module = row[0];
+        const status = row[1];
+
+        if (module === "pipeline" && status === "ok")
+            runPipeline.style.background = "#8df58d";
+
+        if (module === "pq")
+            pqOutput.textContent = "PQ: " + status;
+
+        if (module === "agent" && status === "auto")
+            agentOn.style.background = "#00ccff";
+
+        if (module === "matrix" && status === "rotate")
+            matrix.style.border = "3px solid orange";
+
+        if (module === "nc" && row[2] === "true") {
+            if (row[1] === "ki") swKI.checked = true;
+            if (row[1] === "ai") swAI.checked = true;
+            if (row[1] === "scale") swSCALE.checked = true;
+            if (row[1] === "hub6d") swHUB6D.checked = true;
+        }
+    });
+}
