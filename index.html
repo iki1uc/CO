@@ -96,3 +96,24 @@ document.getElementById("runNC").onclick = () => {
     const out = NC_HUB_ALL("v1024");
     document.getElementById("ncOutput").textContent = JSON.stringify(out, null, 2);
 };
+// --- DOM ELEMENTS ---
+const swKI = document.getElementById("swKI");
+const swAI = document.getElementById("swAI");
+const swSCALE = document.getElementById("swSCALE");
+const swHUB6D = document.getElementById("swHUB6D");
+
+// --- CACHE LADEN ---
+loadXI_IX();
+
+// --- SCHALTER EVENTS ---
+swKI.onchange = () => { XI_IX_CACHE.KI = swKI.checked; saveXI_IX(); };
+swAI.onchange = () => { XI_IX_CACHE.AI = swAI.checked; saveXI_IX(); };
+swSCALE.onchange = () => { XI_IX_CACHE.SCALE = swSCALE.checked; saveXI_IX(); };
+swHUB6D.onchange = () => { XI_IX_CACHE.HUB6D = swHUB6D.checked; saveXI_IX(); };
+
+// --- NC AUSFÜHREN ---
+document.getElementById("runNC").onclick = () => {
+    const out = NC_HUB_ALL("v1024");
+    document.getElementById("ncOutput").textContent =
+        JSON.stringify(out, null, 2);
+};
