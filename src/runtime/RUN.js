@@ -17,3 +17,12 @@ trigger("pipelineStart", () => {
     const out = PIPELINE_MODULE.runSearch("start", { pipeline: "active" });
     show("pipelineOutput", out);
 });
+import { initNCUI } from "./nc-ui.js";
+import { initRESPOUI } from "./respo-ui.js";
+import { initCOUI } from "./co-ui.js";
+
+CO_RUNTIME.init().then(() => {
+    initNCUI();
+    initRESPOUI();
+    initCOUI();
+});
