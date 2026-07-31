@@ -1,0 +1,5 @@
+async function loadCSV(url) {
+    const res = await fetch(url);
+    const text = await res.text();
+    return text.split("\n").map(r => r.split(","));
+}
