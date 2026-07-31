@@ -9,6 +9,12 @@
   <button id="coSend">Senden</button>
   <pre id="coChat"></pre>
 </div>
+async function loadCSV() {
+    const url = "https://raw.githubusercontent.com/iki1uc/CO/main/fehler-ursache-5.csv";
+    const res = await fetch(url);
+    const text = await res.text();
+    return text.split("\n").map(row => row.split(","));
+}
 
 <div class="box">
   <h2>PQ Modus</h2>
