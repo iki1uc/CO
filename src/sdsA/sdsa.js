@@ -23,3 +23,23 @@ getAxes() { return this.axes; }
 getFlow() { return this.flow; }
 getBoost() { return this.boost; }
 getStabilisation() { return this.STATUS?.length || 1; }
+export const SDSA = {
+
+    // ... dein loadCSV + loadAll bleibt unverändert
+
+    getAxes() {
+        return this.AXIOM?.length || 81;
+    },
+
+    getFlow() {
+        return this.PIPE?.length || 1;
+    },
+
+    getBoost() {
+        return this.STATUS?.length || 1;
+    },
+
+    getStabilisation() {
+        return this.FEHLER?.length || 1;
+    }
+};
