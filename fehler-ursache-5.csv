@@ -1,6 +1,12 @@
-﻿Fehler,Ursache,Jetzt gelöst
-swKI is not defined,DOM‑Element fehlt,✔ Referenz hinzugefügt
-NC_HUB_ALL gibt falsche Module,doppelte Funktionen,✔ Clean Version
-Cache lädt nicht,loadXI_IX fehlte,✔ hinzugefügt
-Buttons reagieren nicht,kein onclick,✔ hinzugefügt
-Ausgabe leer,kein JSON.stringify,✔ hinzugefügt
+Pipeline,Station,Aufgabe
+4,U4X (PP),"Bench, Operator, Plan, Input/Output"
+4,CPU,Code ausführen
+4,CACHE,Operatoren halten
+0,KI,"Kern, Entscheidung"
+1,DA,"Start, Prefetch"
+2,NE,"Fehler, Ghost"
+9,BEN,Vollendung
+∞,ULTRA3.0,"Fusion, Meta, Vector"
+GPU,GPU,Rendern
+CHDSK,CHDSK,Prüfen
+ROM,ROM,Speichern
