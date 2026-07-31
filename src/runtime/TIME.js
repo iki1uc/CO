@@ -1,14 +1,23 @@
+import { RESPO_MODULE, SDSA_MODULE, NC_MODULE } from "./RUN.js";
+
 export const CO_MAP = {
+
     mapSystem() {
-        return {
-            RESPO: CO_SYSTEM_MAP.logic.respo,
-            SDSA: CO_SYSTEM_MAP.logic.sdsa,
-            PQ: CO_SYSTEM_MAP.logic.pq,
-            PP: CO_SYSTEM_MAP.logic.pp,
-            AGENT: CO_SYSTEM_MAP.logic.agent,
-            AXI: CO_SYSTEM_MAP.logic.axi,
-            TEM: CO_SYSTEM_MAP.logic.tem,
-            RUN8: CO_SYSTEM_MAP.logic.run8
-        };
+        try {
+            return {
+                RESPO: RESPO_MODULE?.getMasterState() || "unknown",
+                SDSA: SDSA_MODULE?.axes || 81,
+                NC: Object.keys(NC_MODULE || {}),
+                TIME: Date.now()
+            };
+        } catch (err) {
+            console.warn("TIME‑Meldung:", err.message);
+            return {
+                RESPO: "error",
+                SDSA: "error",
+                NC: [],
+                TIME: Date.now()
+            };
+        }
     }
 };
