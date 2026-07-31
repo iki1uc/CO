@@ -15,36 +15,49 @@ async function applySystemCSV(csv) {
         // -------------------------
         // Pipeline
         // -------------------------
-        if (module === "pipeline" && key === "ok")
-            runPipeline.style.background = "#8df58d";
+        if (module === "pipeline" && key === "ok") {
+            const el = document.getElementById("runPipeline");
+            if (el) el.style.background = "#8df58d";
+        }
 
         // -------------------------
         // PQ
         // -------------------------
-        if (module === "pq")
-            pqOutput.textContent = "PQ: " + key;
+        if (module === "pq") {
+            const el = document.getElementById("pqOutput");
+            if (el) el.textContent = "PQ: " + key;
+        }
 
         // -------------------------
         // Agent
         // -------------------------
-        if (module === "agent" && key === "auto")
-            agentOn.style.background = "#00ccff";
+        if (module === "agent" && key === "auto") {
+            const el = document.getElementById("agentOn");
+            if (el) el.style.background = "#00ccff";
+        }
 
         // -------------------------
         // Matrix
         // -------------------------
-        if (module === "matrix" && key === "rotate")
-            matrix.style.border = "3px solid orange";
+        if (module === "matrix" && key === "rotate") {
+            const el = document.getElementById("matrix");
+            if (el) el.style.border = "3px solid orange";
+        }
 
         // -------------------------
         // NC Module
         // -------------------------
         if (module === "nc") {
 
-            if (key === "ki" && value === "true") swKI.checked = true;
-            if (key === "ai" && value === "true") swAI.checked = true;
-            if (key === "scale" && value === "true") swSCALE.checked = true;
-            if (key === "hub6d" && value === "true") swHUB6D.checked = true;
+            const ki    = document.getElementById("swKI");
+            const ai    = document.getElementById("swAI");
+            const scale = document.getElementById("swSCALE");
+            const hub6d = document.getElementById("swHUB6D");
+
+            if (key === "ki"    && value === "true" && ki)    ki.checked = true;
+            if (key === "ai"    && value === "true" && ai)    ai.checked = true;
+            if (key === "scale" && value === "true" && scale) scale.checked = true;
+            if (key === "hub6d" && value === "true" && hub6d) hub6d.checked = true;
         }
     });
 }
