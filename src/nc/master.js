@@ -87,6 +87,10 @@ export const NC = {
                     info: "Pipeline automatisch ausgeführt"
                 };
             },
+function highlightNC(color) {
+    ncOutput.className = "nc-" + color;
+}
+highlightNC("blue");
 
             // -----------------------------
             // NC Stabilisations‑Monitor
