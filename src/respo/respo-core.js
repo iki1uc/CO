@@ -43,3 +43,6 @@ export const RESPO = {
         }
     }
 };
+getFlow() { return this.sdsa.flow; }
+getBoost() { return this.sdsa.boost; }
+getStabilisation() { return this.sdsa.STATUS?.length || 1; }
