@@ -1,0 +1,6 @@
+﻿Fehler,Ursache,Jetzt gelöst
+swKI is not defined,DOM‑Element fehlt,✔ Referenz hinzugefügt
+NC_HUB_ALL gibt falsche Module,doppelte Funktionen,✔ Clean Version
+Cache lädt nicht,loadXI_IX fehlte,✔ hinzugefügt
+Buttons reagieren nicht,kein onclick,✔ hinzugefügt
+Ausgabe leer,kein JSON.stringify,✔ hinzugefügt
