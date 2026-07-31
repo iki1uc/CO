@@ -36,3 +36,63 @@
   <button id="agentOff">Autonom AUS</button>
   <pre id="agentOutput"></pre>
 </div>
+<div class="box">
+  <h2>CO Copilot Instance</h2>
+  <pre id="coInstance">Wird geladen…</pre>
+</div>
+
+<div class="box">
+  <h2>CO Chat</h2>
+  <input id="coInput" placeholder="Nachricht an CO…">
+  <button id="coSend">Senden</button>
+  <pre id="coChat"></pre>
+</div>
+
+<div class="box">
+  <h2>PQ Modus</h2>
+  <button id="pqInteraktion">Interaktion</button>
+  <button id="pqNormal">Normal</button>
+  <button id="pqEdit">Edit</button>
+  <pre id="pqOutput"></pre>
+</div>
+
+<div class="box">
+  <h2>Pipeline</h2>
+  <button id="runPipeline">Pipeline starten</button>
+  <pre id="pipelineOutput"></pre>
+</div>
+
+<div class="box">
+  <h2>9×9 Matrix</h2>
+  <div id="matrix"></div>
+  <pre id="matrixOutput"></pre>
+</div>
+
+<div class="box">
+  <h2>Agent Modus</h2>
+  <button id="agentOn">Autonom AN</button>
+  <button id="agentOff">Autonom AUS</button>
+  <pre id="agentOutput"></pre>
+</div>
+<div class="box">
+  <h2>NC Module</h2>
+
+  <label><input type="checkbox" id="swKI"> KI Modul</label><br>
+  <label><input type="checkbox" id="swAI"> AI Modul</label><br>
+  <label><input type="checkbox" id="swSCALE"> SCALE Modul</label><br>
+  <label><input type="checkbox" id="swHUB6D"> HUB_6D Modul</label><br>
+
+  <button id="runNC">NC_HUB_ALL ausführen</button>
+
+  <pre id="ncOutput"></pre>
+</div>
+loadXI_IX();
+
+swKI.onchange = () => { XI_IX_CACHE.KI = swKI.checked; saveXI_IX(); };
+swAI.onchange = () => { XI_IX_CACHE.AI = swAI.checked; saveXI_IX(); };
+swSCALE.onchange = () => { XI_IX_CACHE.SCALE = swSCALE.checked; saveXI_IX(); };
+swHUB6D.onchange = () => { XI_IX_CACHE.HUB6D = swHUB6D.checked; saveXI_IX(); };
+document.getElementById("runNC").onclick = () => {
+    const out = NC_HUB_ALL("v1024");
+    document.getElementById("ncOutput").textContent = JSON.stringify(out, null, 2);
+};
