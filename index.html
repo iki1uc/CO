@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>CO Copilot Instance</title>
 
+    <!-- Styles -->
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="./CSS/AG.css">
 </head>
@@ -13,6 +14,7 @@
 <h1>CO Copilot Instance</h1>
 <div id="status">Wird geladen…</div>
 
+<!-- ORBIT PANEL -->
 <h2>Orbit‑Continuum</h2>
 <div class="orbit-panel">
     <div class="orbit-button" id="orbitNC">NC Orbit</div>
@@ -26,6 +28,7 @@
     <div class="orbit-button" id="orbitMatrix">Matrix Orbit</div>
 </div>
 
+<!-- NC MODULE -->
 <h2>NC Module</h2>
 <button id="ncPredict">NC Predict</button>
 <button id="ncAnalyse">NC Analyse</button>
@@ -36,10 +39,13 @@
 
 <pre id="ncOutput"></pre>
 
+<!-- MATRIX -->
 <h2>Matrix</h2>
 <button id="matrixRefresh">Matrix aktualisieren</button>
 <div id="matrix" class="matrix"></div>
 
+<!-- Runtime Loader -->
 <script type="module" src="./runtime/RUN.js"></script>
+
 </body>
 </html>
