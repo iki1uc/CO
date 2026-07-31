@@ -10,6 +10,26 @@
 </head>
 
 <body>
+<h2>CO Module</h2>
+
+<label>
+  CO Chat
+  <input type="checkbox" id="swCOChat">
+</label>
+
+<label>
+  CO Search
+  <input type="checkbox" id="swCOSearch">
+</label>
+
+<label>
+  CO Load
+  <input type="checkbox" id="swCOLoad">
+</label>
+
+<button id="runCO">CO ausführen</button>
+
+<pre id="coOutput"></pre>
 
 <h2>NC Module (unten)</h2>
 
@@ -101,6 +121,47 @@
 
 <!-- Runtime Loader -->
 <script type="module" src="./runtime/RUN.js"></script>
+export const CO_CACHE = {
+    Chat: true,
+    Search: true,
+    Load: true
+};
+
+export function saveCO() {
+    localStorage.setItem("CO_CACHE", JSON.stringify(CO_CACHE));
+}
+
+export function loadCO() {
+    const data = localStorage.getItem("CO_CACHE");
+    if (data) Object.assign(CO_CACHE, JSON.parse(data));
+}
+export function initCOUI() {
+
+    const swCOChat = document.getElementById("swCOChat");
+    const swCOSearch = document.getElementById("swCOSearch");
+    const swCOLoad = document.getElementById("swCOLoad");
+    const runCO = document.getElementById("runCO");
+    const coOutput = document.getElementById("coOutput");
+
+    loadCO();
+
+    swCOChat.checked = CO_CACHE.Chat;
+    swCOSearch.checked = CO_CACHE.Search;
+    swCOLoad.checked = CO_CACHE.Load;
+
+    swCOChat.onchange = () => { CO_CACHE.Chat = swCOChat.checked; saveCO(); };
+    swCOSearch.onchange = () => { CO_CACHE.Search = swCOSearch.checked; saveCO(); };
+    swCOLoad.onchange = () => { CO_CACHE.Load = swCOLoad.checked; saveCO(); };
+
+    runCO.onclick = () => {
+        const out = {
+            chat: CO_CACHE.Chat ? CO_RUNTIME.chat("Hallo CO!") : "Chat deaktiviert",
+            search: CO_CACHE.Search ? CO_RUNTIME.search("Test", []) : "Search deaktiviert",
+            load: CO_CACHE.Load ? CO_RUNTIME.load("system-status.csv") : "Load deaktiviert"
+        };
+        coOutput.textContent = JSON.stringify(out, null, 2);
+    };
+}
 
 </body>
 </html>
