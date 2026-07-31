@@ -1,30 +1,61 @@
-# CO – PQ / RESPO / SDSA Runtime
-
-CO ist ein modular aufgebautes Runtime‑System bestehend aus:
-
-- PQ (Priority Queue)
-- RESPO (Response Flow)
-- SDSA (81‑Achsenvektor)
-- XTOM (Transformation Layer)
-- MEAT (Execution Layer)
-- HDF (Local TMP Storage)
-
-Ziel:
-Dieses Repository ist so strukturiert, dass GitHub Copilot im Browser (github.dev)
-alle Module verstehen, analysieren und optimieren kann.
-
-## Struktur
-
-/docs  
-Enthält die technische Dokumentation (Architektur, Achsen, Flows).
-
-/src  
-Enthält die Runtime‑Module (PQ, RESPO, SDSA, XTOM, MEAT, HDF).
-
-/github  
-Enthält Copilot‑Instructions und Agents, damit Copilot das Projekt versteht.
-
-## Ziel des Projekts
-
-CO soll als KI‑unterstützte Runtime dienen, die lokal ausgeführt wird,
-während Copilot im Browser als Analyse‑Operator arbeitet.
+CO/
+│
+├── DOCS/                     # Architektur & Systemdokumentation
+│   ├── architecture.md
+│   ├── pq-system.md
+│   ├── respo-flow.md
+│   ├── sdsA-81.md
+│   └── stabilisationsachse.md
+│
+├── github/agents/            # Agenten-Definitionen
+│   ├── pq.agent.md
+│   ├── respo.agent.md
+│   ├── sdsA.agent.md
+│   └── copilot-instructions.md
+│
+├── src/
+│   ├── api/                  # API Layer
+│   │   └── api.js
+│   │
+│   ├── co/                   # CO Kernel
+│   │   ├── BOOT.js
+│   │   ├── CO.boot
+│   │   └── co.js
+│   │
+│   ├── kg/                   # Knowledge Graph
+│   │   └── KG.js
+│   │
+│   ├── nc/                   # NC Module Hub
+│   │   └── master.js
+│   │
+│   ├── pq/                   # PQ System
+│   │   ├── pq-copilot.js
+│   │   └── pq.md
+│   │
+│   ├── respo/                # RESPO Flow Engine
+│   │   └── respo-core.js
+│   │
+│   ├── runtime/              # Runtime Kernel
+│   │   ├── RUN.js
+│   │   ├── TIME.js
+│   │   └── runtime.js
+│   │
+│   ├── sdsA/                 # SDSA Stabilisationsachse
+│   │   ├── sdsa.js
+│   │   └── sdsa.md
+│   │
+│   ├── station/              # Pipeline Station Engine
+│   │   └── station.js
+│   │
+│   └── xtom/                 # XTOM Layer
+│       └── xtom.md
+│
+├── index.html                # Operator Dashboard UI
+│
+├── README.md                 # (Diese Datei)
+│
+├── axiom-hardware-6.csv      # Hardware-Axiom Mapping
+├── fehler-ursache-5.csv      # Fehleranalyse CSV
+├── pipeline-station-11.csv   # Pipeline Stationen
+├── respo-master.csv          # RESPO Masterzustände
+└── system-status.csv         # Systemstatus für UI
